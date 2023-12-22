@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import axios from 'axios';
+import Select, { ActionMeta } from 'react-select';
 
 interface IFormInput {
     firstName: string;
@@ -12,18 +13,23 @@ interface IOption {
     url: string;
 }
 
+const defaultValues = {
+    firstName: '',
+    lastName: '',
+    pockemons: [],
+};
+
 const Form = () => {
     const [fetchedOptions, setFetchedOptions] = useState<IOption[]>([]);
-
-    const { register, handleSubmit } = useForm<IFormInput>();
+    const { register, handleSubmit, control, reset } = useForm<IFormInput>();
     const onSubmit: SubmitHandler<IFormInput> = (data) => {
         console.log(data);
+        reset(defaultValues);
     };
 
     useEffect(() => {
         const fetchPockemons = async () => {
             const pockemons = await axios.get('https://pokeapi.co/api/v2/pokemon');
-            console.log(pockemons);
             setFetchedOptions(pockemons.data.results);
         };
         fetchPockemons();
@@ -53,13 +59,20 @@ const Form = () => {
             </label>
             <label className="font-bold flex flex-col gap-2">
                 Team
-                <select
-                    {...register('pockemons')}
-                    className="font-normal text-[rgb(121,121,121)] border-black-800 border-2 rounded-md p-2 hover:border-blue-800 focus:border-blue-800 outline-none">
-                    {fetchedOptions.map((option) => (
-                        <option value={option.name}>{option.name}</option>
-                    ))}
-                </select>
+                <Controller
+                    name="pockemons"
+                    control={control}
+                    render={({ field }) => (
+                        <Select
+                            className="font-normal"
+                            {...field}
+                            options={fetchedOptions}
+                            isMulti
+                            getOptionLabel={(option: IOption) => option.name}
+                            getOptionValue={(option: IOption) => option.url}
+                        />
+                    )}
+                />
             </label>
             <button
                 type="submit"
