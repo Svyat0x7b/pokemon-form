@@ -3,7 +3,11 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import axios from 'axios';
 import Select, { ActionMeta } from 'react-select';
 
-interface IFormInput {
+interface IFormProps {
+    onSetTeam: (data: IFormInput) => void;
+    onOpenModal: (isOpen: boolean) => void;
+}
+export interface IFormInput {
     firstName: string;
     lastName: string;
     pockemons: IOption[];
@@ -19,11 +23,13 @@ const defaultValues = {
     pockemons: [],
 };
 
-const Form = () => {
+const Form: React.FC<IFormProps> = ({ onSetTeam, onOpenModal }) => {
     const [fetchedOptions, setFetchedOptions] = useState<IOption[]>([]);
     const { register, handleSubmit, control, reset } = useForm<IFormInput>();
     const onSubmit: SubmitHandler<IFormInput> = (data) => {
         console.log(data);
+        onSetTeam(data);
+        onOpenModal(true);
         reset(defaultValues);
     };
 
