@@ -17,6 +17,16 @@ const Modal: React.FC<IModalProps> = ({ children, handleClose }) => {
                         </button>
                     </div>
                     <div>{children}</div>
+                    <div>
+                        <div className="flex justify-end gap-5 mt-6">
+                            <button className="font-bold p-[10px] rounded-lg hover:bg-slate-300">
+                                Cancel
+                            </button>
+                            <button className="bg-[#0045cf] text-white font-bold p-[10px] rounded-lg bg- hover:bg-sky-500">
+                                Save
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

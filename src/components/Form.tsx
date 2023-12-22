@@ -6,6 +6,7 @@ import Select, { ActionMeta } from 'react-select';
 interface IFormProps {
     onSetTeam: (data: IFormInput) => void;
     onOpenModal: (isOpen: boolean) => void;
+    onFetchPockemonsDetails: () => void;
 }
 export interface IFormInput {
     firstName: string;
@@ -23,7 +24,7 @@ const defaultValues = {
     pockemons: [],
 };
 
-const Form: React.FC<IFormProps> = ({ onSetTeam, onOpenModal }) => {
+const Form: React.FC<IFormProps> = ({ onSetTeam, onOpenModal, onFetchPockemonsDetails }) => {
     const [fetchedOptions, setFetchedOptions] = useState<IOption[]>([]);
     const { register, handleSubmit, control, reset } = useForm<IFormInput>();
     const onSubmit: SubmitHandler<IFormInput> = (data) => {
