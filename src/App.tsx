@@ -44,6 +44,11 @@ function App() {
     console.log(fetchedPockemons);
     return (
         <div>
+            <h1 className="text-center text-[28px] font-bold mt-20 flex justify-center gap-3">
+                <span className="text-[#9d1919]">Pockemon</span>
+                <img src="../public/images/pockemon.png" alt="pockemon" width={40} />
+                Team
+            </h1>
             <Form
                 onSetTeam={setTeam}
                 onOpenModal={setIsModalOpen}
@@ -52,8 +57,10 @@ function App() {
             {isModalOpen && (
                 <Modal handleClose={() => setIsModalOpen(false)}>
                     <div>
-                        <span>{team.firstName}</span>
-                        <span>{team.lastName}</span>
+                        <div className="flex gap-1 justify-center bg-[#dddddd] rounded-xl py-2">
+                            <span>{team.firstName}</span>
+                            <span>{team.lastName}</span>
+                        </div>
                         <div>
                             {fetchedPockemons.map((pockemon) => (
                                 <PockemonSprites sprites={pockemon.sprites} name={pockemon.name} />
