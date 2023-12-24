@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import axios from 'axios';
 import Select from 'react-select';
-interface IFormProps {
+import hiddenEye from '../../public/images/hidden-eye.png';
+import eye from '../../public/images/hidden-eye.png';
+import infoIcon from '../../public/images/info.png';
+export interface IFormProps {
     onSetTeam: (data: IFormInput) => void;
     onOpenModal: (isOpen: boolean) => void;
     onFetchPockemonsDetails: () => void;
@@ -79,7 +82,6 @@ const Form: React.FC<IFormProps> = ({ onSetTeam, onOpenModal, onFetchPockemonsDe
             setIsDisabled(true);
             return;
         }
-        console.log(data);
         onSetTeam({ ...data, pockemons: selectedOptions });
         onOpenModal(true);
         reset(defaultValues);
@@ -108,15 +110,7 @@ const Form: React.FC<IFormProps> = ({ onSetTeam, onOpenModal, onFetchPockemonsDe
                     }`}
                 />
                 <button onClick={toggleFnVisibility} className="absolute right-5 top-[46px]">
-                    <img
-                        src={
-                            isFnVisible
-                                ? '../../public/images/hidden-eye.png'
-                                : '../../public/images/eye.png'
-                        }
-                        alt="eye"
-                        className="w-[15px]"
-                    />
+                    <img src={isFnVisible ? hiddenEye : eye} alt="eye" className="w-[15px]" />
                 </button>
                 {errors.firstName && (
                     <p className="text-[#cc0000] text-[10px] font-normal">
@@ -147,15 +141,7 @@ const Form: React.FC<IFormProps> = ({ onSetTeam, onOpenModal, onFetchPockemonsDe
                     className={`absolute right-5 top-[46px] w-fit ${
                         !isLnVisible && 'border-[#cc0000]'
                     }`}>
-                    <img
-                        src={
-                            isLnVisible
-                                ? '../../public/images/hidden-eye.png'
-                                : '../../public/images/eye.png'
-                        }
-                        alt="eye"
-                        className="w-[15px]"
-                    />
+                    <img src={isLnVisible ? hiddenEye : eye} alt="eye" className="w-[15px]" />
                 </button>
                 {errors.lastName && (
                     <p className="text-[#cc0000] text-[10px] font-normal">
@@ -168,7 +154,7 @@ const Form: React.FC<IFormProps> = ({ onSetTeam, onOpenModal, onFetchPockemonsDe
                     <span>Team</span>
                     <span className="flex items-center gap-1 font-normal text-[#a5a5a5]">
                         Optional
-                        <img src="../../public/images/info.png" alt="info" className="w-[15px]" />
+                        <img src={infoIcon} alt="info" className="w-[15px]" />
                     </span>
                 </div>
                 <Controller

@@ -4,6 +4,7 @@ import Form from './components/Form';
 import Modal from './components/Modal';
 import PockemonSprites from './components/PockemonSprites';
 import { IFormInput } from './components/Form';
+import PockemonImg from '../public/images/pockemon.png';
 
 interface IPockemon {
     name: string;
@@ -20,7 +21,6 @@ function App() {
     });
 
     const fetchPokemonsDetails = async () => {
-        console.log('onFetchPockemonsDetails');
         setFetchedPokemons([]);
         const { pockemons } = team;
         let pokemonsTemp: IPockemon[] = [];
@@ -41,12 +41,11 @@ function App() {
         fetchPokemonsDetails();
     }, [team, setTeam]);
 
-    console.log(fetchedPockemons);
     return (
         <div>
             <h1 className="text-center text-[28px] font-bold mt-20 flex justify-center gap-3">
                 <span className="text-[#9d1919]">Pockemon</span>
-                <img src="../public/images/pockemon.png" alt="pockemon" width={40} />
+                <img src={PockemonImg} alt="pockemon" width={40} />
                 Team
             </h1>
             <Form
@@ -62,8 +61,12 @@ function App() {
                             <span>{team.lastName}</span>
                         </div>
                         <div>
-                            {fetchedPockemons.map((pockemon) => (
-                                <PockemonSprites sprites={pockemon.sprites} name={pockemon.name} />
+                            {fetchedPockemons.map((pockemon, index) => (
+                                <PockemonSprites
+                                    sprites={pockemon.sprites}
+                                    name={pockemon.name}
+                                    key={index}
+                                />
                             ))}
                         </div>
                     </div>
